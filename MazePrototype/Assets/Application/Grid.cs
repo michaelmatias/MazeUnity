@@ -31,7 +31,7 @@ namespace Assets.Application
                 {
                     GameObject g = Instantiate(CellGameObject, new Vector3(r, 0, c), Quaternion.identity);
                     g.GetComponent<Cell>().Row = r;
-                    g.GetComponent<Cell>().Column = r;
+                    g.GetComponent<Cell>().Column = c;
                     row.Add(g);
                 }
                 _grid.Add(row);
@@ -40,10 +40,10 @@ namespace Assets.Application
 
         private void ConfigureCells()
         {
-            foreach (var cell in Cells)
+            foreach (GameObject cell in Cells)
             {
-                var row = cell.GetComponent<Cell>().Row;
-                var col = cell.GetComponent<Cell>().Column;
+                int row = cell.GetComponent<Cell>().Row;
+                int col = cell.GetComponent<Cell>().Column;
 
 
                 GameObject northGameObject = this[row - 1, col];
@@ -56,7 +56,6 @@ namespace Assets.Application
                 {
                     cell.GetComponent<Cell>().South = southGameObject.GetComponent<Cell>();
                 }
-
                 GameObject westGameObject = this[row, col - 1];
                 if (westGameObject != null)
                 {

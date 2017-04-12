@@ -24,8 +24,7 @@ namespace Assets.Application
 
 
 
-                    //var shouldCloseOut = atEasternBoundary || (!atNorthernBoundary && Random.Range(0,2) == 0);
-                    var shouldCloseOut = (!atNorthernBoundary && Random.Range(0, 2) == 0);
+                    var shouldCloseOut = atEasternBoundary || (!atNorthernBoundary && Random.Range(0,2) == 0);
 
                     if (shouldCloseOut)
                     {
@@ -33,7 +32,6 @@ namespace Assets.Application
                         if (member.GetComponent<Cell>().North != null)
                         {
                             member.GetComponent<Cell>().Link(member.GetComponent<Cell>().North);
-                            member.GetComponent<Cell>().NorthWall.SetActive(true);
                         }
 
                         run.Clear();
@@ -41,8 +39,26 @@ namespace Assets.Application
                     else
                     {
                         cell.GetComponent<Cell>().Link(cell.GetComponent<Cell>().East);
-                        cell.GetComponent<Cell>().EastWall.SetActive(true);
                     }
+                }
+            }
+            foreach (GameObject cell in GetComponent<Grid>().Cells)
+            {
+                if (cell.GetComponent<Cell>().Linked(cell.GetComponent<Cell>().North))
+                {
+                    cell.GetComponent<Cell>().NorthWall.SetActive(false);
+                }
+                if (cell.GetComponent<Cell>().Linked(cell.GetComponent<Cell>().South))
+                {
+                    cell.GetComponent<Cell>().SouthWall.SetActive(false);
+                }
+                if (cell.GetComponent<Cell>().Linked(cell.GetComponent<Cell>().West))
+                {
+                    cell.GetComponent<Cell>().WestWall.SetActive(false);
+                }
+                if (cell.GetComponent<Cell>().Linked(cell.GetComponent<Cell>().East))
+                {
+                    cell.GetComponent<Cell>().EastWall.SetActive(false);
                 }
             }
             return GetComponent<Grid>();
